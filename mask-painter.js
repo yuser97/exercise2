@@ -1,4 +1,3 @@
-// mask-painter.js
 registerPaint('maskPainter', class {
     static get inputProperties() { return ['--hole-positions']; }
     
