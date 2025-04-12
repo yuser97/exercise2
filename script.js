@@ -1,20 +1,16 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Конфигурация
     const VIDEO_DEBOUNCE = 200;
     const CHECK_DEBOUNCE = 150;
     const LONG_TASK_THRESHOLD = 100;
 
-    // Инициализация элементов
     const video = document.getElementById('video-bg');
     const textContainer = document.querySelector('.text-container');
     const bigGaps = document.querySelectorAll('.big-gap');
     
-    // Создание маски
     const mask = document.createElement('div');
     mask.className = 'mask';
     document.body.insertBefore(mask, textContainer);
 
-    // Оптимизированный debounce с мониторингом
     function debounce(func, timeout = 100, name = 'anonymous') {
         let timer;
         return (...args) => {
@@ -31,7 +27,6 @@ document.addEventListener('DOMContentLoaded', function() {
         };
     }
 
-    // Обновление позиций отверстий
     function updateHolePositions() {
         const holePositions = [];
         for (const gap of bigGaps) {
@@ -46,7 +41,6 @@ document.addEventListener('DOMContentLoaded', function() {
         mask.style.setProperty('--hole-positions', JSON.stringify(holePositions));
     }
 
-    // Инициализация Paint Worklet
     if ('paintWorklet' in CSS) {
         CSS.paintWorklet.addModule('mask-painter.js')
             .then(() => {
@@ -65,7 +59,6 @@ document.addEventListener('DOMContentLoaded', function() {
         mask.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
     }
 
-    // Адаптация видео
     const optimizedResizeVideo = debounce(() => {
         video.style.width = '100%';
         video.style.height = 'auto';
@@ -79,14 +72,12 @@ document.addEventListener('DOMContentLoaded', function() {
     window.addEventListener('resize', optimizedResizeVideo);
     optimizedResizeVideo();
 
-    // Управление видео
     video.muted = true;
     video.playsInline = true;
     video.play()
         .then(() => console.debug('Video autoplay successful'))
         .catch(e => console.info('Autoplay blocked:', e.message));
 
-    // Проверка переноса текста
     function checkTextWrapping() {
         const textParts = document.querySelectorAll('.text-part');
         let prevBottom = -Infinity;
@@ -110,7 +101,7 @@ document.addEventListener('DOMContentLoaded', function() {
         checkLines();
     }
 
-    // Управление gapcheck элементами
+
     function checkLines() {
         try {
             const checks = document.querySelectorAll('.check');
@@ -118,12 +109,10 @@ document.addEventListener('DOMContentLoaded', function() {
             
             if (!gaps.length) return;
 
-            // Сброс состояния
             for (const gap of gaps) {
                 gap.style.display = 'none';
             }
 
-            // Обновление по условиям
             if (checks.length >= 7 && gaps.length >= 3) {
                 for (const gap of gaps) gap.style.display = 'block';
             } else if (checks.length >= 6 && gaps.length >= 3) {
@@ -137,7 +126,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Оптимизированный обработчик изменений
     const mutationHandler = debounce(() => {
         requestAnimationFrame(() => {
             checkTextWrapping();
@@ -161,7 +149,6 @@ document.addEventListener('DOMContentLoaded', function() {
         attributeFilter: ['class', 'style']
     });
 
-    // Первоначальная инициализация
     checkTextWrapping();
     checkLines();
 });
