@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- meta tags and title остаются без изменений -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Text with Video Gaps</title>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        if ('paintWorklet' in CSS) {
+            CSS.paintWorklet.addModule('mask-painter.js');
+        }
+    </script>
+    <script src="script.js" async></script>
+</head>
+<body>
+    <!-- Видео и скрипты без изменений -->
+    <video autoplay muted loop playsinline id="video-bg">
+        <source src="video.mp4" type="video/mp4">
+    </video>
+    
+    <div class="text-container">
+        <div class="text-content">
+            <div class="text-block">
+                <span class="text-part">We're here</span>
+                <span class="big-gap"></span>
+                <span class="text-part" >to make</span>
+                <span class="big-gap big-gap-check"></span>
+                
+                <span class="line-break"></span>
+                
+                <span class="text-part">healthy</span>
+                <span class="big-gap"></span>
+                <span class="text-part">living effortless,</span>
+                <span class="big-gap big-gap-check"></span>
+                
+                <span class="line-break"></span>
+                
+                <span class="text-part">so you can</span>
+                <span class="big-gap"></span>
+                <span class="text-part">live longer</span>
+                <span class="big-gap big-gap-check"></span>
+                
+                <span class="line-break"></span>
+                
+                <span class="text-part">and happier</span>
+                <span class="big-gap"></span>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
